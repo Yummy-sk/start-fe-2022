@@ -46,6 +46,22 @@ export function Class({ $target, state }) {
       .join('');
   };
 
+  this.filterLinks = ({ state }) => {
+    return state
+      .filter(item => item.links.length > 0)
+      .sort((a, b) => {
+        return a.links.length - b.links.length;
+      });
+  };
+
+  this.setState = ({ nextState }) => {
+    this.state = nextState;
+
+    console.log(this.$target);
+
+    $target.innerHTML = generateClassTable({ state: this.state });
+  };
+
   this.render = () => {
     $target.innerHTML = generateClassTable({ state });
   };
