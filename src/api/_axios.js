@@ -1,9 +1,8 @@
 import axios from 'axios';
-const API_URL = ({ path }) => `/public/${path}.json`;
 
-export async function _fetch({ path }) {
+export async function _axios({ path }) {
   try {
-    const response = await axios.get(API_URL({ path }));
+    const response = await axios.get(path);
 
     return await response.data;
   } catch (e) {

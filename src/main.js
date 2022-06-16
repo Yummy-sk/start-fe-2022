@@ -1,5 +1,10 @@
 import App from '@/app';
 import '@style/main.css';
 
-const app = new App();
-app.render();
+async function Main() {
+  const app = await new App();
+
+  app.render();
+}
+
+Main();

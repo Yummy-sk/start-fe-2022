@@ -1,1 +1,1 @@
-export { _fetch } from '@api/_fetch';
+export { _axios } from '@api/_axios';
