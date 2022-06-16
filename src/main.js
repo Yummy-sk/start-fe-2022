@@ -1,2 +1,5 @@
-import './style/main.css';
-import hello from '@/components/hello';
+import App from '@/app';
+import '@style/main.css';
+
+const app = new App();
+app.render();

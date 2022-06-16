@@ -25,7 +25,10 @@ module.exports = {
     extensions: ['.js'],
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@style': path.resolve(__dirname, './src/style'),
       '@components': path.resolve(__dirname, './src/components'),
+      '@api': path.resolve(__dirname, './src/api'),
+      '@public': path.resolve(__dirname, './public'),
     },
   },
   plugins: [
