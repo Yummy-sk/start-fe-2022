@@ -1,4 +1,5 @@
 import { _axios } from '@api/index';
+import { Class, Quiz } from '@components/index';
 import { CLASS_ROOT, QUIZ_ROOT, $ } from '@utils/index';
 
 class App {
@@ -6,7 +7,17 @@ class App {
     return (async () => {
       this.$loading = $({ selector: '.spinner-border' });
       this.$container = $({ selector: '.container' });
-      this.state = await Promise.all([_axios({ path: CLASS_ROOT }), _axios({ path: QUIZ_ROOT })]);
+      const [classState, quizState] = await Promise.all([_axios({ path: CLASS_ROOT }), _axios({ path: QUIZ_ROOT })]);
+
+      this.class = new Class({
+        $target: $({ selector: '.class-table-body' }),
+        state: classState,
+      });
+
+      this.quiz = new Quiz({
+        $target: $({ selector: '.quiz-table-body' }),
+        state: quizState,
+      });
       return this;
     })();
   }
@@ -21,6 +32,9 @@ class App {
     await this.delayProcess({ delay: 1500 });
     this.$loading.classList.add('hide');
     this.$container.classList.remove('hide');
+
+    this.class.render();
+    this.quiz.render();
   }
 }
 
