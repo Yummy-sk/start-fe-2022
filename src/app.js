@@ -101,6 +101,11 @@ class App {
       this.class.setState({ nextState: state });
       return;
     }
+
+    if (type === 'quiz') {
+      this.quiz.setState({ nextState: state });
+      return;
+    }
   }
 
   async render() {
