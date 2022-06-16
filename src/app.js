@@ -43,17 +43,25 @@ class App {
     this.$classBtnGroup.addEventListener('click', ({ target }) => {
       const classState = [...this.state[0]];
       const name = target.name;
+      let nextState = null;
 
       this.handleBtnActive({ name, $target: this.$classLinks });
 
       switch (name) {
         case 'all':
+          nextState = classState;
           return this.setState({ state: classState, type: 'class' });
         case 'link':
-          const nextState = this.class.filterLinks({ state: classState });
+          nextState = this.class.filterLinks({ state: classState });
           this.setState({ state: nextState, type: 'class' });
           break;
-
+        case 'git':
+          nextState = this.class.filerGit({ state: classState });
+          this.setState({ state: nextState, type: 'class' });
+          break;
+        case 'recent':
+          nextState = this.class.filterRecent({ state: classState });
+          this.setState({ state: nextState, type: 'class' });
         default:
           break;
       }
@@ -62,7 +70,23 @@ class App {
 
   registerQuizBtnEvent() {
     this.$quizBtnGroup.addEventListener('click', e => {
-      console.log(e.target.name);
+      const quizState = [...this.state[1]];
+      const name = e.target.name;
+      let nextState = null;
+
+      this.handleBtnActive({ name, $target: this.$quizLinks });
+      switch (name) {
+        case 'all':
+          nextState = quizState;
+          this.setState({ state: quizState, type: 'quiz' });
+          break;
+        case 'git':
+          nextState = this.quiz.filerGit({ state: quizState });
+          this.setState({ state: nextState, type: 'quiz' });
+          break;
+        default:
+          break;
+      }
     });
   }
 
@@ -75,12 +99,16 @@ class App {
   setState({ state, type }) {
     if (type === 'class') {
       this.class.setState({ nextState: state });
+      return;
     }
   }
 
   async render() {
     this.registerClassBtnEvent();
+    this.registerQuizBtnEvent();
+
     await this.delayProcess({ delay: 1500 });
+
     this.$loading.classList.add('hide');
     this.$container.classList.remove('hide');
 

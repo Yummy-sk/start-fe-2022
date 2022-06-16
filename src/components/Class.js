@@ -1,4 +1,6 @@
 export function Class({ $target, state }) {
+  this.state = state;
+
   const generateLiks = ({ links }) => {
     return links
       .map((link, idx) => {
@@ -54,15 +56,25 @@ export function Class({ $target, state }) {
       });
   };
 
+  this.filerGit = ({ state }) => {
+    return state.filter(item => item.gitUrl);
+  };
+
+  this.filterRecent = ({ state }) => {
+    return state
+      .filter(item => item.date)
+      .sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+      });
+  };
+
   this.setState = ({ nextState }) => {
     this.state = nextState;
-
-    console.log(this.$target);
 
     $target.innerHTML = generateClassTable({ state: this.state });
   };
 
   this.render = () => {
-    $target.innerHTML = generateClassTable({ state });
+    $target.innerHTML = generateClassTable({ state: this.state });
   };
 }
